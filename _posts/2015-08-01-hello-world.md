@@ -2,43 +2,21 @@
 layout: post
 title: "Hello World"
 description: ""
-category:
-tags:
+category: start
+tags: [intro]
 ---
 {% include JB/setup %}
 
 ## Overview
-我y
+#我的第一个程序
 
-	int main()
-	{
-		printf("Hello, World");
-	}
+{% highlight c linenos %}
 
-### What is Jekyll?
-
-Jekyll is a parsing engine bundled as a ruby gem used to build static websites from
-dynamic components such as templates, partials, liquid code, markdown, etc. Jekyll is known as "a simple, blog aware, static site generator".
-
-    .
-    |-- _config.yml
-    |-- _includes
-    |-- _layouts
-    |   |-- default.html
-    |   |-- post.html
-    |-- _posts
-    |   |-- 2011-10-25-open-source-is-good.markdown
-    |   |-- 2011-04-26-hello-world.markdown
-    |-- _site
-    |-- index.html
-    |-- assets
-        |-- css
-            |-- style.css
-        |-- javascripts
-		
-
-- **\_config.yml**
-	Stores configuration data.
+int main()
+{
+	printf("Hello, World");
+}
+{% endhighlight %}
 		
     ---
     title :  Hello World
