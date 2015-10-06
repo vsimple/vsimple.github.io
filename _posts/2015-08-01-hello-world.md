@@ -8,17 +8,19 @@ tags: [intro]
 {% include JB/setup %}
 
 ## Overview
-#我的第一个程序
+
+#### 我的第一个程序
 
 {% highlight c linenos %}
 
 int main()
 {
-	printf("Hello, World");
+    printf("Hello, World");
 }
 {% endhighlight %}
-		
-    ---
-    title :  Hello World
-    categories : [lessons, beginner]
-    ---
+
+{{ page.content | number_of_words }}
+
+
+{{ site.time | date_to_string }}
+

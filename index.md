@@ -13,6 +13,3 @@ tagline: Supporting tagline
   {% endfor %}
 </ul>
 
-## To-Do
-
-If you'd like to be added as a contributor, [please fork](http://github.com/vsimple)!
