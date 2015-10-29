@@ -3,7 +3,7 @@ layout: post
 title: "CodeBlock_gcc5.1"
 description: ""
 category: CodeBlocks
-tags: [CodeBlocks]
+tags: [CodeBlocks, gcc]
 ---
 {% include JB/setup %}
 
