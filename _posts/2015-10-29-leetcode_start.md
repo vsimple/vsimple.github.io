@@ -3,13 +3,15 @@ layout: post
 title: "LeetCode_start"
 description: ""
 category: LeetCode
-tags: [LeetCode, start]
+tags: [LeetCode]
 ---
 {% include JB/setup %}
 
 ##LeetCode
 今年暑假，我在LeetCode上做过部分简单题。今天再次打开，发现网站增加了一些功能，
 比如可以用自己构造的测例测试程序；
+
+<a name="top"></a>
 
 ####目录
 ---
@@ -18,8 +20,8 @@ tags: [LeetCode, start]
 
 ---
 	
-<h4 id="1">1 线性表</h4>
-<h4 id="1.1">1.1 Remove Duplicates from Sorted Array</h4>
+<h4 id="1"><a href="#top">1 线性表</a></h4>
+<h4 id="1.1"><a href="#top">1.1 Remove Duplicates from Sorted Array</a></h4>
 
 ####问题描述：
 > Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
