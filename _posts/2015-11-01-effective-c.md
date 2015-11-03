@@ -16,6 +16,7 @@ tags: [Effective C++]
 * [Item 3: Use const whenever possible.](#3) 
 * [Item 4: Make sure that objects are initialized before they're used.](#4) 
 * [Item 5: Know what functions C++ silently writes and calls.](#5) 
+* [Item 6: Explicitly disallow the use of compiler-generated functions you do not want.](#6) 
 
 ---
 	
@@ -112,3 +113,54 @@ int main()
 
 <h4><font color="#FF0000">Things to Remember</font></h4>
 	Compilers may implicity generate a class's default constructor, copy constructor, copy assignment operator, and destructor.
+
+<h4 id="6"><a href="#top"><font color="blue">Item 6: Explicitly disallow the use of compiler-generated functions you do not want.</font></a></h4>
+
+there are two methods.
+
+> To disallow functionality automatically provided by compilers, declare the corresponding member functions private and give no implementations. Using a base class like Uncopyable is one way to do this.
+
+{% highlight c++ linenos=table %}
+class Uncopyable {                                                     
+protected:
+    Uncopyable() {}
+    ~Uncopyable() {}
+private:
+    Uncopyable( const Uncopyable & );
+    Uncopyable &operator=( const Uncopyable & );
+};
+
+class HomeForSale : private Uncopyable {
+    int a = 0;
+};
+
+int main()
+{
+    HomeForSale s1;
+    HomeForSale s2( s1 );
+    s1 = s2;
+    return 0;
+}                                                              
+{% endhighlight %}
+
+> Using delete and default.
+	
+{% highlight c++ linenos=table %}
+class HomeSale {                                                       
+public:
+    HomeSale() = default;
+    HomeSale( const HomeSale & ) = delete;
+    HomeSale &operator=( const HomeSale & ) = delete;
+private:
+    int a = 0;
+};
+
+int main()
+{
+    HomeSale s1;
+    HomeSale s2( s1 );
+    s1 = s2;
+    return 0;
+}                                                             
+{% endhighlight %}
+	
