@@ -11,12 +11,18 @@ tags: [Effective C++]
 
 ###Items
 ---
-* [Item 1: View C++ as a federation of languages.](#1) 
-* [Item 2: Prefer consts, enums, and inlines to #defines.](#2) 
-* [Item 3: Use const whenever possible.](#3) 
-* [Item 4: Make sure that objects are initialized before they're used.](#4) 
-* [Item 5: Know what functions C++ silently writes and calls.](#5) 
-* [Item 6: Explicitly disallow the use of compiler-generated functions you do not want.](#6) 
+* [Item 1:  View C++ as a federation of languages.](#1) 
+* [Item 2:  Prefer consts, enums, and inlines to #defines.](#2) 
+* [Item 3:  Use const whenever possible.](#3) 
+* [Item 4:  Make sure that objects are initialized before they're used.](#4) 
+* [Item 5:  Know what functions C++ silently writes and calls.](#5) 
+* [Item 6:  Explicitly disallow the use of compiler-generated functions you do not want.](#6) 
+* [Item 7:  Declare destructors virtual in polymorphic base classes.](#7) 
+* [Item 8:  Prevent exceptions from leaving destructors.](#8)
+* [Item 9:  Never call virtual functions during construction or destruction.](#9)
+* [Item 10: Have assignment operators return a reference to *this.](#10)
+* [Item 11: Handle assignment to self in operator=.](#11)
+* [Item 12: Copy all parts of an object.](#12)
 
 ---
 	
@@ -163,4 +169,100 @@ int main()
     return 0;
 }                                                             
 {% endhighlight %}
+
+<h4 id="7"><a href="#top"><font color="blue">Item 7: Declare destructors virtual in polymorphic base classes.</font></a></h4>
+
+> The implementation of virtual functions requires that objects carry information that can be used at runtime to determine which virtual functions should be invoked on the object.
+this information typically takes the form of a pointer called a vptr("virtual table pointer"). The vptr points to an array of function pointers called a vtbl("virtual table"); 
+each class with virtual functions has an associated vtbl. When a virtual function is invoked on an object, the actual function called is determined by following the object's vptr
+to a vtbl and then looking up the appropriate function pointer in the vtbl.
+
+> The bottom line is that gratuitously declaring all destructors virtual is just as wrong as never declaring them virtual.
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Polymorphic base classes should declare virtual destructors. If a class has any virtual functions, it should have a virtual destructor.
 	
+	Classes not designed to be base classes or not designed to be used polymorphically should not declare virtual destructors.
+
+<h4 id="8"><a href="#top"><font color="blue">Item 8: Prevent exceptions from leaving destructors.</font></a></h4>
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Destructors should never emit exceptions. If functions called in a destructor may throw, the destructor should catch any exceptions, then swallow them or terminate the program.
+	
+	If class clients need to be able to react to exceptions thrown during an operation, the class should provide a regular function that performs the operation.
+
+<h4 id="9"><a href="#top"><font color="blue">Item 9: Never call virtual functions during construction or destruction.</font></a></h4>
+
+> During base class construction, virtual functions never go down into derived classes.
+
+> An Object doesn't become a derived class object until execution of a derived class contruction begins.
+
+> Upon entry to the base class destructor, the object becomes a base class object.
+
+> The only way to avoid this program is to make sure that none of your constructors or destructors call virtual functions on the object beging
+created or destroyed and that all the functions they call obey the same constraint.
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Don't call virtual functions during construction or destruction, because such calls will never go to a more derived class than that of the currently executing constructor or destructor.
+	
+<h4 id="10"><a href="#top"><font color="blue">Item 10: Have assignment operators return a reference to *this.</font></a></h4>
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Have assignment operators return a reference to *this.
+
+<h4 id="11"><a href="#top"><font color="blue">Item 11: Handle assignment to self in operator=.</font></a></h4>
+
+Four steps to improve the operator=.
+
+{% highlight c++ linenos=table %}
+Widget &Widget::operator=( const Widget &rhs )                         
+{
+	delete pb;
+	pb = new Bitmap( *rhs.pb );
+	return *this;
+}
+	
+Widget &Widget::operator=( const Widget &rhs )
+{
+	if( this != &rhs )
+	{
+		delete pb;
+		pb = new Bitmap( &rhs.pb );
+	}
+	return *this;
+}
+	
+Widget &Widget::operator=( const Widget &rhs )
+{
+	Bitmap *pOrig = pb;
+	pb = new Bitmap( *rhs.pb );
+	delete pOrig;
+	return *this;
+}
+	
+Widget &Widget::operator=( const Widget &rhs )
+{
+	Widget temp( rhs );
+	swap( temp );
+	return *this;
+}
+{% endhighlight %}
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Make sure operator= is well-behaved when an object is assigned to itself. Techniques include comparing addresses of source and target objects, careful statement ordering, and copy-and-swap.
+	
+	Make sure that any function operating on more than one object behaves correctly if two or more of the objects are the same.
+
+<h4 id="12"><a href="#top"><font color="blue">Item 12: Copy all parts of an object.</font></a></h4>
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Copying functions should be sure to copy all of an object's data members and all of its base class parts.
+	
+	Don't try to implement one of the copying functions in terms of the other. Instead, put common functionality in a third function that both call.
+
