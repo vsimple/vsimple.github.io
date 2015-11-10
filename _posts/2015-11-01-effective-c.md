@@ -23,6 +23,8 @@ tags: [Effective C++]
 * [Item 10: Have assignment operators return a reference to *this.](#10)
 * [Item 11: Handle assignment to self in operator=.](#11)
 * [Item 12: Copy all parts of an object.](#12)
+* [Item 13: Use objects to manage resources.](#13)
+* [Item 14: Think carefully about copying behavior in resource-manageing classes.](#14)
 
 ---
 	
@@ -265,4 +267,29 @@ Widget &Widget::operator=( const Widget &rhs )
 	Copying functions should be sure to copy all of an object's data members and all of its base class parts.
 	
 	Don't try to implement one of the copying functions in terms of the other. Instead, put common functionality in a third function that both call.
+
+<h4 id="13"><a href="#top"><font color="blue">Item 13: Use objects to manage resources.</font></a></h4>
+
+> by putting resources inside objects, we can rely on C++'s automatic destructor invocation to make sure that the resources are released.
+
+> RAII: Resource Acquistion Is Initialization
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	To prevent resources leaks, use RAII objects that acquire resources in their constructors and release them in their destructors.
+	
+	Two commonly useful RAII classes are tr1::shared_ptr and auto_ptr. tr1::shared_ptr is usually the better choice, because its behavior when copied is intuitive. Copying an auto_ptr sets it to null.
+
+<h4 id="14"><a href="#top"><font color="blue">Item 14: Think carefully about copying behavior in resource-manageing classes.</font></a></h4>
+
+> Copy the underlying resource.
+
+> Transfer ownership of the underlying resource.
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Copying an RAII object entails copying the resource it manages, so the copying behavior of the resource determines the copying behavior of the RAII object.
+	
+	Common RAII class copying behaviors are disallowing copying and performing reference counting, but other behaviors are possible.
+	
 
