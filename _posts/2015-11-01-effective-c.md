@@ -30,6 +30,7 @@ tags: [Effective C++]
 * [Item 17: Store newed objects in smart pointers in standalone statements.](#17)
 * [Item 18: Make interfaces easy to use correctly and hard to use incorrectly.](#18)
 * [Item 19: Treat class design as type design.](#19)
+* [Item 20: Prefer pass-by-reference-to-const to pass-by-value.](#20)
 
 ---
 	
@@ -355,4 +356,14 @@ Widget &Widget::operator=( const Widget &rhs )
 <h4><font color="#FF0000">Things to Remember</font></h4>
 
 	Class design is type design. Before defining a new type, be sure to consider all the issues discussed in this Item.
+
+<h4 id="20"><a href="#top"><font color="blue">Item 20: Prefer pass-by-reference-to-const to pass-by-value.</font></a></h4>
+
+> references are typically implemented as pointers, so passing something by reference usually means really passing a pointer.
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Prefer pass-by-reference-to-const over pass-by-value. It's typically more efficent and it avoids the slicing problem.
+	
+	The rule doesn't apply to built-in types and STL iterator and function object types. For them, pass-by-value is usually appropriate.
 
