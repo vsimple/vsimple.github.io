@@ -25,6 +25,11 @@ tags: [Effective C++]
 * [Item 12: Copy all parts of an object.](#12)
 * [Item 13: Use objects to manage resources.](#13)
 * [Item 14: Think carefully about copying behavior in resource-manageing classes.](#14)
+* [Item 15: Provide access to raw resources in resource-managing classes.](#15)
+* [Item 16: Use the same form in corresponding uses of new and delete.](#16)
+* [Item 17: Store newed objects in smart pointers in standalone statements.](#17)
+* [Item 18: Make interfaces easy to use correctly and hard to use incorrectly.](#18)
+* [Item 19: Treat class design as type design.](#19)
 
 ---
 	
@@ -292,4 +297,62 @@ Widget &Widget::operator=( const Widget &rhs )
 	
 	Common RAII class copying behaviors are disallowing copying and performing reference counting, but other behaviors are possible.
 	
+
+
+<h4 id="15"><a href="#top"><font color="blue">Item 15: Provide access to raw resources in resource-manageing classes.</font></a></h4>
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	APIs often require access to raw resources, so each RAII class should offer a way to get at the resource it manages.
+	
+	Access may be via explicit conversion or implicit conversion. In general, explicit conversion is safer, but implicit conversion is more convenient for clients.
+
+<h4 id="16"><a href="#top"><font color="blue">Item 16: Use the same form in corresponding uses of new and delete.</font></a></h4>
+
+> When you employ a new expression, two things happen: 1. memory is allocated( operator new ); 2. one or more constructors are called for that memory.
+
+> When you employ a delete expression, two other things happen: one or more destructors are called for the memory, then the memory is deallocated( operator delete ).
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	If you use [] in a new expression, you must use [] in the corresponding delete expression. If you don't use [] in a new expression, you mustn't use [] in the corresponding delete expression.
+
+<h4 id="17"><a href="#top"><font color="blue">Item 17: Store newed objects in smart pointers in standalone statements.</font></a></h4>
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Store newed objects in smart pointers in standalone statements. Failure to do this can lead to subtle resource leaks when exceptions are thrown.
+
+<h4 id="18"><a href="#top"><font color="blue">Item 18: Make interfaces easy to use correctly and hard to use incorrectly.</font></a></h4>
+
+> unless there's a good reason not to, have your types behave consistently with the built-in types.
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Good interfaces are easy to use correctly and hard to use incorrectly. You should strive for these characteristics in all your interfaces.
+	
+	Ways to facilitate correct use include consistency in interfaces and behavioral compatibility with built-in types.
+	
+	Ways to prevent errors include creating new types, restricting operations on types, constraining object values, and eliminating client resource management responsibilities.
+	
+	tr1::shared_ptr supports custom deleters. This prevents the cross-DLL problem, can be used to automatically unlock mutexes, etc.
+
+<h4 id="19"><a href="#top"><font color="blue">Item 19: Treat class design as type design.</font></a></h4>
+
+* How should objects of your new type be created and destroyed?
+* How should object initialization differ from object assignment?
+* What does it mean for objects of your new type to be passed by value?
+* What are the restrictions on legal values for your new type?
+* Does your new type fit into an inheritance graph?
+* What kind of type conversion are allowed for your new type?
+* What operators and functions make sense for the new type?
+* What standard functions should be disallowed?
+* Who should have access to the members of your new type?
+* What is the "undeclared interface" of your new type?
+* How general is your new type?
+* Is a new type really what you need?
+
+<h4><font color="#FF0000">Things to Remember</font></h4>
+
+	Class design is type design. Before defining a new type, be sure to consider all the issues discussed in this Item.
 
