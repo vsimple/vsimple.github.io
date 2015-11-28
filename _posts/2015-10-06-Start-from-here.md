@@ -5,7 +5,7 @@ description: ""
 category: start
 tags: [start]
 ---
-{% include JB/setup 
+{% include JB/setup %}
 
 ## 在你最感兴趣的事物上，隐藏着人生的秘密。
 
