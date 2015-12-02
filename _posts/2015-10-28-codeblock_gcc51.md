@@ -21,7 +21,4 @@ tags: [CodeBlocks, gcc]
 	
 ![有帮助的截图]({{ site.url }}/assets/images/CB_gcc/setCB.gif)
 
-
-![有帮助的截图]({{ site.url }}/assets/images/CB_gcc/try.gif)
-
 ####4.测试成功。
